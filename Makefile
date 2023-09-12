@@ -6,10 +6,6 @@ CC = $(LLVM_MOS_DIR)bin/mos-clang
 OC = $(LLVM_MOS_DIR)bin/llvm-objcopy
 OD = $(LLVM_MOS_DIR)bin/llvm-objdump
 
-ifeq ($(OS),Windows_NT)
-  CC := $(CC).bat
-endif
-
 CFLAGS = -Os
 LDFLAGS += -T link.ld -Wl 
 LDFLAGS += -nostdlib -v
