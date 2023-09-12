@@ -3,31 +3,18 @@ __rc0 = 0x00;
 INCLUDE imag-regs.ld
 
 MEMORY {
-  zero_page : ORIGIN = __rc31 + 1, LENGTH = 0x100 - (__rc31 + 1)
-  ram : ORIGIN = 0x200, LENGTH = 0x1e00;
-  prg_rom : ORIGIN = 0x8000, LENGTH = 0x4000;
+  zp : ORIGIN = __rc31 + 1, LENGTH = 0x100 - (__rc31 + 1)
+  ram : ORIGIN = 0x200, LENGTH = 0x1e00
+  rom : ORIGIN = 0x8000, LENGTH = 0x4000
+  vec : ORIGIN = 0xFFFa, LENGTH = 0x0006
 }
-
-REGION_ALIAS("c_rom", prg_rom)
-REGION_ALIAS("c_rom", ram)
 
 __stack = 0x800;
 
+ENTRY(_start)
+
 SECTIONS {
   .text : {
-    _init = .;
-    _start = .;
-    *(.init)
-    *(.init.*)
-    
-    *(.call_main)
-    *(.after_main)
-
-    _fini=.;
-    *(.fini)
-    *(.fini.*)
-    *(.fini_rts)
-
     *(.text)
     *(.text.*)
     
@@ -44,20 +31,19 @@ SECTIONS {
     __fini_array_end = .;
 
 
-  } >c_readonly
+  } >rom
 
   .rodata : {
     *(.rodata)
     *(.rodata.*)
-  } >c_readonly
+  } >rom
   
   .data : {
     __data_start = .;
     *(.data)
     *(.data.*)
-    __data_end = .;
 
-  } >c_writeable AT>c_readonly
+  } >ram AT>rom
   __data_load_start = LOADADDR(.data);
   __data_size = SIZEOF(.data);
 
@@ -69,7 +55,7 @@ SECTIONS {
     *(.zp.rodata.*)
 
 
-  } >zp AT>c_readonly
+  } >zp AT>rom
   __zp_data_load_start = LOADADDR(.zp.data);
   __zp_data_size = SIZEOF(.zp.data);
   
@@ -96,24 +82,17 @@ SECTIONS {
     *(COMMON)
     __bss_end = .;
     
-  } >c_writeable
+  } >ram
   __bss_size = SIZEOF(.bss);
   
   .noinit (NOLOAD) : {
     *(.noinit)
     *(.noinit.*)
     __heap_start = .;
-  } >c_writeable
+  } >ram
     
-  .prg_rom_fixed : { *(.prg_rom_fixed .prg_rom_fixed.*) } >prg_rom
+  .prg_rom_fixed : { *(.prg_rom_fixed .prg_rom_fixed.*) } >rom
  
-  .vector 0xfffa : { SHORT(nmi) SHORT(_start) SHORT(irq) } >prg_rom
+  .vector 0xfffa : { SHORT(nmi) SHORT(_start) SHORT(irq) } >vec
 }
-
-OUTPUT_FORMAT {
-  
-
-
-}
-
 
