@@ -10,6 +10,9 @@ __chr_ram_size = 0
 .weak __chr_nvram_size
 __chr_nvram_size = 0
 
+.weak __chr_rom_size
+__chr_rom_size = 0
+
 /* Raw setting for RAM size header fields. */
 .weak __prg_ram_size_raw
 __prg_ram_size_raw = 0

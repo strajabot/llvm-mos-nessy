@@ -8,8 +8,6 @@ asm(".section .init.50,\"axR\",@progbits\n"
     "  jsr __early_init\n");
 
 void __early_init(void) {
-	*(char*)0x2000 = 0;
-
 }
 
 asm(".section .init.250,\"axR\",@progbits\n"
