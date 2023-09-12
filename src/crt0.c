@@ -1,19 +1,20 @@
 #define __NESSY__
 
 // Set up the hardware stack and launch early initialization.
-asm(".section .init.50,\"axR\",@progbits\n"
+asm(".section .init\n"
     "  sei\n"
     "  ldx #$ff\n"
     "  txs\n"
-    "  jsr __early_init\n");
+    "  jsr init\n");
 
-void __early_init(void) {
-}
-
-asm(".section .init.250,\"axR\",@progbits\n"
-    "  jsr __late_init\n");
-
-void __late_init(void) {
+void init()
+{
+    // init sp to ff 
+    // init "__stack" at locations 0 and 1 to __stack
+    // zero bss
+    // zero zp bss
+    // call main 
+    // loop
 }
 
 // Establish trivial irq handler.
