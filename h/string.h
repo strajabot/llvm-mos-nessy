@@ -23,4 +23,4 @@ void __memset(char *ptr, char value, size_t num);
 }
 #endif
 
-#endif // not _STRING_H_
+#endif // !_STRING_H_

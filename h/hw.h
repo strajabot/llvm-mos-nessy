@@ -21,4 +21,4 @@ extern char __init_array_end;
 extern char __fini_array_start;
 extern char __fini_array_end;
 
-#endif //!HW_H
+#endif // !HW_H
