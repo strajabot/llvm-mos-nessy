@@ -26,8 +26,15 @@ __attribute__((weak)) void *memcpy(void *dest, const void *src, size_t count) {
 }
 
 __attribute__((weak)) void __memset(char *ptr, char value, size_t num) {
-  for (; num; ptr++, num--)
+  while (num)
+  {
+    if(ptr == (char*)0xFFFF)
+      ptr = 0;
+    else
+      ptr++;
+    num--;
     *ptr = value;
+  }
 }
 
 __attribute__((weak)) void *memset(void *ptr, int value, size_t num) {
