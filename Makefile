@@ -57,6 +57,7 @@ libcrt0.a: $(OBJECTS)
 publish: libcrt0.a
 	cp libcrt0.a ../nessy-gamedev/target/nessy/lib/libcrt0.a
 	cp *.ld ../nessy-gamedev/target/nessy/lib/
+	cp -r h ../nessy-gamedev/target/nessy/
 
 clean:
 	rm -rf obj libcrt0.a
